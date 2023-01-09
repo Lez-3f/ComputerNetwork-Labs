@@ -17,7 +17,7 @@ public class SimpleSender {
 		/** 与邮件服务器建立TCP连接. */
 		// TODO: 1.在""中填入我们的smtp服务器和正确端口，清华邮件服务器mails.tsinghua.edu.cn，端口是25
 		// e.g. Socket socket = new Socket("mails.163.com",25);
-		Socket socket = new Socket("", 25);
+		Socket socket = new Socket("mails.tsinghua.edu.cn", 25);
 
 		/** 创建BufferedReader每次读入一行信息. */
 		InputStream is = socket.getInputStream();
@@ -28,7 +28,7 @@ public class SimpleSender {
 		String response = br.readLine();
 		System.out.println(response);
 		// TODO: 2.把code改为合适的代码
-		int code = -1;	//把-1改为合适的代码
+		int code = 220;	//把-1改为合适的代码
 		if (!response.startsWith(Integer.toString(code))) {
 			throw new Exception(code + " reply not received from server.");
 		}
@@ -41,52 +41,53 @@ public class SimpleSender {
 		 *	e.g.	command = "Helo x\r\n";
 		 *	其中\r\n为回车符,每个命今都必需以它们结尾. */
 		// TODO: 3.填入命令
-		command = "";
+		command = "Helo tsinghua\r\n";
 		System.out.print(command);
 		os.write(command.getBytes("US-ASCII"));
 		response = br.readLine();
 		System.out.println(response);
+
 		// TODO: 4.把code改为合适的代码
-		code = -1; //把-1改为合适的代码
+		code = 250; //把-1改为合适的代码
 		if (!response.startsWith(Integer.toString(code))) {
 			throw new Exception(code + " reply not received from server.");
 		}
 
 		/** 发送 MAIL FROM 命令. */
 		// TODO: 5.将x@x.x改为合适的地址
-		command = "MAIL FROM:<x@x.x>\r\n";
+		command = "MAIL FROM:<123456@qqq.com>\r\n";
 		System.out.print(command);
 		os.write(command.getBytes("US-ASCII"));
 		response = br.readLine();
 		System.out.println(response);
 		// TODO: 6.把code改为合适的代码
-		code = -1; //把-1改为合适的代码
+		code = 250; //把-1改为合适的代码
 		if (!response.startsWith(Integer.toString(code))) {
 			throw new Exception(code + " reply not received from server.");
 		}
 
 		/** 发送 RCPT TO 命令. */
 		// TODO: 7.将x@x.x改为合适的地址
-		command = "RCPT TO:<x@x.x>\r\n";
+		command = "RCPT TO:<zel20@mails.tsinghua.edu.cn>\r\n";
 		System.out.print(command);
 		os.write(command.getBytes("US-ASCII"));
 		response = br.readLine();
 		System.out.println(response);
 		// TODO: 8.把code改为合适的代码
-		 code = -1; //把-1改为合适的代码
+		code = 250; //把-1改为合适的代码
 		if (!response.startsWith(Integer.toString(code))) {
 			throw new Exception(code + " reply not received from server.");
 		}
 
 		/** 发送 DATA 命令. */
 		// TODO: 9.填入命令
-		command = "";
+		command = "DATA\r\n";
 		System.out.print(command);
 		os.write(command.getBytes("US-ASCII"));
 		response = br.readLine();
 		System.out.println(response);
 		// TODO: 10.把code改为合适的代码
-		 code = -1; //把-1改为合适的代码
+		code = 354; //把-1改为合适的代码
 		if (!response.startsWith(Integer.toString(code))) {
 			throw new Exception(code + " reply not received from server.");
 		}
@@ -97,21 +98,21 @@ public class SimpleSender {
 		os.write(date.getBytes("US-ASCII"));
 		String str = "";
 		// TODO: 11.把"x@x.x"改为邮件中显示的发件人地址
-		str = "From:" + "x@x.x" + "\r\n";
+		str = "From:" + "123456@qqq.com" + "\r\n";
 		System.out.print(str);
 		os.write(str.getBytes("US-ASCII"));
 		// TODO: 12.把"x@x.x"改为邮件中显示的收件人地址
-		str = "To:" + "x@x.x" + "\r\n";
+		str = "To:" + "zel@mails.tsinghua.edu.cn" + "\r\n";
 		System.out.print(str);
 		os.write(str.getBytes("US-ASCII"));
 
 		/** 发送邮件內容. */
 		// TODO: 13.在"x"中填入Subject内容.
-		str = "SUBJECT:" + "x" + "\r\n\r\n";
+		str = "SUBJECT:" + "test" + "\r\n\r\n";
 		System.out.print(str);
 		os.write(str.getBytes("US-ASCII"));
 		// TODO: 14.在"x"中填入邮件正文内容.
-		str = "x" + "\r\n";
+		str = "test" + "\r\n";
 		System.out.print(str);
 		os.write(str.getBytes("UTF-8"));
 
@@ -122,14 +123,14 @@ public class SimpleSender {
 		response = br.readLine();
 		System.out.println(response);
 		// TODO: 15.把code改为合适的代码
-		 code = -1; //把-1改为合适的代码
+		code = 250; //把-1改为合适的代码
 		if (!response.startsWith(Integer.toString(code))) {
 			throw new Exception(code + " reply not received from server.");
 		}
 
 		/** 发送 QUIT 命令. */
 		//TODO:	16.填入命令
-		command = "";
+		command = "QUIT\r\n";
 		System.out.print(command);
 		os.write(command.getBytes("US-ASCII"));
 		response = br.readLine();
